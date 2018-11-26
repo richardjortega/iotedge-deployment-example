@@ -37,17 +37,7 @@
             "restartPolicy": "always",
             "settings": {
               "image": "mcr.microsoft.com/azureiotedge-simulated-temperature-sensor:1.0",
-              "createOptions": "{}"
-            }
-          },
-          "JSModule": {
-            "version": "1.0",
-            "type": "docker",
-            "status": "running",
-            "restartPolicy": "always",
-            "settings": {
-              "image": "richardjortega/jsmodule:0.0.4-amd64",
-              "createOptions": "{}"
+              "createOptions": "{\"HostConfig\":{\"Memory\":\"1073741824\", \"CpuShares\":\"2048\"}}"
             }
           },
           "asaModule": {
