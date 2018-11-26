@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Devices.Samples
       await GetConfigurations(registryManager, 1).ConfigureAwait(false);
     }
 
-    private static async Task AddDeviceConfiguration(RegistryManager registryManager, string configurationId)
+    private async Task AddDeviceConfiguration(RegistryManager registryManager, string configurationId)
     {
       Configuration configuration = new Configuration(configurationId);
 
@@ -69,30 +69,32 @@ namespace Microsoft.Azure.Devices.Samples
     ///   }
     /// }
     /// </code>
-    /// </example>      
-    private static void CreateModulesContent(Configuration configuration, string configurationId)
+    /// </example>     
+    private void CreateModulesContent(Configuration configuration, string configurationId)
     {
       configuration.Content = new ConfigurationContent();
       configuration.Content.ModulesContent = new Dictionary<string, IDictionary<string, object>>();
 
       // Read deployment.json file and convert to native objects
       var modulesContent = JsonConvert.DeserializeObject<dynamic>(File.ReadAllText(@"deployment.json"));
+
+      const string PROPERTIES_DESIRED = "properties.desired";
       
       IDictionary<string, object> edge_agent = new Dictionary<string, object>();
-      edge_agent["properties.desired"] = modulesContent["modulesContent"]["$edgeAgent"]["properties.desired"];
+      edge_agent[PROPERTIES_DESIRED] = modulesContent["modulesContent"]["$edgeAgent"][PROPERTIES_DESIRED];
 
       IDictionary<string, object> edge_hub = new Dictionary<string, object>();
-      edge_hub["properties.desired"] = modulesContent["modulesContent"]["$edgeHub"]["properties.desired"];
+      edge_hub[PROPERTIES_DESIRED] = modulesContent["modulesContent"]["$edgeHub"][PROPERTIES_DESIRED];
 
       IDictionary<string, object> asa_module = new Dictionary<string, object>();
-      asa_module["properties.desired"] = modulesContent["modulesContent"]["asaModule"]["properties.desired"];
+      asa_module[PROPERTIES_DESIRED] = modulesContent["modulesContent"]["asaModule"][PROPERTIES_DESIRED];
 
       configuration.Content.ModulesContent["$edgeAgent"] = edge_agent;
       configuration.Content.ModulesContent["$edgeHub"] = edge_hub;
       configuration.Content.ModulesContent["asaModule"] = asa_module;
     }
 
-    private static async Task GetConfigurations(RegistryManager registryManager, int count)
+    private async Task GetConfigurations(RegistryManager registryManager, int count)
     {
       IEnumerable<Configuration> configurations = await registryManager.GetConfigurationsAsync(count).ConfigureAwait(false);
 
@@ -105,7 +107,7 @@ namespace Microsoft.Azure.Devices.Samples
       Console.WriteLine("Configurations received");
     }
 
-    private static void PrintConfiguration(Configuration configuration)
+    private void PrintConfiguration(Configuration configuration)
     {
       Console.WriteLine("Configuration Id: " + configuration.Id);
       Console.WriteLine("Configuration SchemaVersion: " + configuration.SchemaVersion);
@@ -124,7 +126,7 @@ namespace Microsoft.Azure.Devices.Samples
       Console.WriteLine("------------------------------------------------------------");
     }
 
-    private static void PrintContent(string contentType, ConfigurationContent configurationContent)
+    private void PrintContent(string contentType, ConfigurationContent configurationContent)
     {
       Console.WriteLine("Configuration ContentType: " + contentType);
 
