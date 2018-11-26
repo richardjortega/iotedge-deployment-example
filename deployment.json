@@ -63,7 +63,12 @@
       }
     },
     "asaModule": {
-      "properties.desired": {}
+      "properties.desired": {
+        "ASAJobInfo": "<JOB_URI_WITH_SAS_TOKEN>",
+        "ASAJobResourceId": "<JOB_RESOURCE_ID>",
+        "ASAJobEtag": "<JOB_ETAG>",
+        "PublishTimestamp": "<JOB_PUBLISH_TIMESTAMP>"
+      }
     }
   }
 }
