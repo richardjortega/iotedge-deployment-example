@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "ConsoleSample": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "IOTHUB_CONN_STRING_CSHARP": "<INSERT_IOTHUB_CONN_STRING_CSHARP>",
+        "CONFIG_ID": "<INSERT_CONFIG_ID>"
+      }
+    }
+  }
+}
